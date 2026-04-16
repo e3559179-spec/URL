@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>Bean Card Pro</title>
+
+<style>
+body{
+  background:#eaeaea;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:"PingFang SC",sans-serif;
+}
+
+/* ===== 卡片 ===== */
+.card{
+  width:340px;
+  aspect-ratio:2/3;
+  perspective:1200px;
+}
+
+.inner{
+  width:100%;
+  height:100%;
+  position:relative;
+  transition:transform 0.7s cubic-bezier(.4,.2,.2,1);
+  transform-style:preserve-3d;
+}
+
+.card.flip .inner{
+  transform:rotateY(180deg);
+}
+
+/* ===== 面 ===== */
+.face{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:26px;
+  overflow:hidden;
+  backface-visibility:hidden;
+  padding:24px;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+}
+
+.back{
+  transform:rotateY(180deg);
+}
+
+/* ===== 背景 ===== */
+.bg{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+}
+
+/* ===== Header ===== */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#fff;
+}
+
+.code{
+  font-size:11px;
+  letter-spacing:2px;
+  opacity:0.8;
+}
+
+/* ===== 标题 ===== */
+.title{
+  margin-top:12px;
+}
+
+.title h1{
+  font-size:28px;
+  margin:0;
+  font-family:serif;
+  letter-spacing:1px;
+}
+
+.title p{
+  font-size:12px;
+  opacity:0.7;
+  margin-top:4px;
+}
+
+/* ===== 信息区 ===== */
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
+
+.label{
+  font-size:11px;
+  opacity:0.6;
+  letter-spacing:1px;
+}
+
+.value{
+  font-size:14px;
+}
+
+/* ===== 分割线 ===== */
+.divider{
+  height:1px;
+  background:rgba(255,255,255,0.15);
+  margin:18px 0;
+}
+
+/* ===== 风味 ===== */
+.flavor{
+  margin-top:auto;
+}
+
+.section-title{
+  font-size:12px;
+  opacity:0.7;
+  margin-bottom:8px;
+  letter-spacing:1px;
+}
+
+.tag{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.18);
+  margin:4px 4px 0 0;
+  font-size:13px;
+}
+
+/* ===== 背面 ===== */
+.text{
+  font-size:15px;
+  line-height:1.9;
+  letter-spacing:0.4px;
+  max-width:85%;
+}
+
+/* 冲煮 */
+.brew{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:80px 1fr;
+  row-gap:10px;
+  column-gap:10px;
+  font-size:14px;
+}
+
+/* ===== 按钮 ===== */
+.flip-btn{
+  position:absolute;
+  bottom:16px;
+  right:18px;
+  font-size:12px;
+  opacity:0.7;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" onclick="flipCard(this)">
+  <div class="inner">
+
+    <!-- ===== 正面 ===== -->
+    <div class="face front">
+      <div class="bg" id="bg"></div>
+
+      <div class="header">
+        <div class="logo"></div>
+        <div class="code">No.0021</div>
+      </div>
+
+      <div class="title">
+        <h1>西达摩·花魁</h1>
+        <p>SIDAMO FLOWER CROWN</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="info">
+        <div><div class="label">产地</div><div class="value">埃塞俄比亚</div></div>
+        <div><div class="label">庄园</div><div class="value">西达摩</div></div>
+        <div><div class="label">豆种</div><div class="value">原生种</div></div>
+        <div><div class="label">处理法</div><div class="value">水洗</div></div>
+        <div><div class="label">烘焙程度</div><div class="value">浅烘焙</div></div>
+        <div><div class="label">批次</div><div class="value">2026.03</div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="flavor">
+        <div class="section-title">风味</div>
+        <div>
+          <span class="tag">草莓</span>
+          <span class="tag">橙子</span>
+          <span class="tag">蜂蜜</span>
+        </div>
+      </div>
+
+      <div class="flip-btn">翻转 →</div>
+    </div>
+
+
+    <!-- ===== 背面（高级排版） ===== -->
+    <div class="face back">
+      <div class="bg" id="bg2"></div>
+
+      <div style="display:flex;flex-direction:column;height:100%;">
+
+        <!-- 故事 -->
+        <div>
+          <div class="section-title">豆子故事</div>
+          <div class="text">
+            这支来自西达摩的咖啡具有清晰花香与果汁感，
+            甜感干净，余韵细腻而持久，
+            呈现出优雅且层次分明的风味结构。
+          </div>
+        </div>
+
+        <!-- 留白核心 -->
+        <div style="flex:1;"></div>
+
+        <!-- 冲煮 -->
+        <div>
+          <div class="section-title">冲煮建议</div>
+
+          <div class="brew">
+            <div class="label">器具</div><div>V60</div>
+            <div class="label">粉水比</div><div>1:15</div>
+            <div class="label">水温</div><div>92℃</div>
+            <div class="label">时间</div><div>1:45</div>
+            <div class="label">研磨</div><div>中细研磨</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flip-btn">← 返回</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function flipCard(el){
+  el.classList.toggle("flip");
+}
+
+/* ===== 风味 → 配色系统 ===== */
+const flavors = ["草莓","橙子","蜂蜜"];
+
+const colorMap = {
+  草莓:["#f8b6c2","#f28ca3"],
+  橙子:["#f6c177","#e07a3f"],
+  蜂蜜:["#f3d48b","#d4a373"],
+  葡萄:["#cdb4db","#9d4edd"]
+};
+
+function generateGradient(flavorList){
+  let colors = flavorList.map(f=>colorMap[f]).flat();
+  return `linear-gradient(135deg, ${colors.join(",")})`;
+}
+
+const gradient = generateGradient(flavors);
+
+document.getElementById("bg").style.background=gradient;
+document.getElementById("bg2").style.background=gradient;
+</script>
+
+</body>
+</html>
